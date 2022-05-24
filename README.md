@@ -19,4 +19,3 @@ git clone git@github.com:<repo-location/repo-name>.git
 cd <repo-name>
 ```
 3. Download the training slides to your local computer, where you have access to PowerPoint to open the slides. Follow the slides to execute different examples.
-```
