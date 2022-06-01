@@ -1,0 +1,40 @@
+## Exercise 1:
+# during training:
+srun --partition=reservation --reservation=Training-GPU --nodes=1 --cpus-per-task=1 --gres=gpu:k80:1 --mem=2G --time=00:02:00 nvidia-smi
+
+srun --partition=reservation --reservation=Training-GPU --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:02:00 nvidia-smi
+
+srun --partition=reservation --reservation=Training-GPU --nodes=1 --cpus-per-task=1 --gres=gpu:v100-sxm2:1 --mem=2G --time=00:02:00 nvidia-smi
+
+# outside of training:
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:k80:1 --mem=2G --time=00:02:00 nvidia-smi
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:02:00 nvidia-smi
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:v100-sxm2:1 --mem=2G --time=00:02:00 nvidia-smi
+
+sinfo -p gpu --Format=nodes,cpus,gres,features
+
+
+## Exercise 2:
+# during training:
+srun --partition=reservation --reservation=Training-GPU --nodes=1 --cpus-per-task=1 --pty --export=All --gres=gpu:1 --mem=10G --time=01:00:00 /bin/bash
+
+# outside of training:
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --pty --export=All --gres=gpu:1 --mem=10G --time=01:00:00 /bin/bash
+
+# Environment build in your $HOME directory steps:
+module load cuda/11.1 
+module load anaconda3/2021.05 
+conda create --name pytorch_env python=3.7 anaconda -y
+source activate pytorch_env 
+conda install pytorch==1.8.0 torchvision==0.9.0 
+torchaudio==0.8.0 cudatoolkit=11.1 -c pytorch -c conda-forge -y
+
+# Load the environment from a module (alternative):
+module load cuda/11.1 
+module load anaconda3/2021.05 
+source activate pytorch_env_training
+python -c 'import torch; print(torch.cuda.is_available())'
+
+## Exercise 4:
+srun --partition=reservation --reservation=Training-GPU --nodes=1 --cpus-per-task=1 --pty --export=All --gres=gpu:1 --mem=10G --time=01:00:00 /bin/bash
+
