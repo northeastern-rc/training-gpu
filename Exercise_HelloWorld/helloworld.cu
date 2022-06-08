@@ -1,12 +1,13 @@
 /* Demonstration of a "Hello World" Cuda example in C */
-  
+
 #include <stdio.h>
 #define NUM_BLOCKS 4
 #define BLOCK_WIDTH 8
 
+
 /* Function executed on device GPU */
-__global__
-void hello()
+__global__ 
+void hello() 
 {
   printf("\tHello from GPU: thread %d and block %d\n", threadIdx.x, blockIdx.x);
 
