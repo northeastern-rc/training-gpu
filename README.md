@@ -4,7 +4,7 @@ training modules. The sub-folders are based on the date the
 training session was conducted.
 
 ## What's in each training sub-folder?
-* Training PowerPoint slides
+* Training PowerPoint slides are on https://northeastern.instructure.com/courses/126767
 * Exercise folders
 
 ## Steps to download and use the repo on Discovery
