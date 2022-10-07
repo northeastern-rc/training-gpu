@@ -1,10 +1,3 @@
-##Logging to Discovery:
-ssh -Y <yourusername>@login.discovery.neu.edu
-
-##Copying training material to Discovery using 'scp':
-git clone <url>
-
-##Exercise 1:
 # During training:
 srun --partition=reservation --reservation=fall2022_gpu_training --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:30:00 --pty /bin/bash
 
@@ -36,24 +29,3 @@ python -c 'import tensorflow as tf; print(tf.test.is_built_with_cuda())'
 
 # Deactivate conda environment
 conda deactivate
-
-
-## Exercise 2:
-# Requesting a GPU node
-srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:1 --mem=2G --time=00:05:00 --pty /bin/bash
-nvidia-smi
-exit
-
-# Requesting a GPU node with a specific type of GPU
-srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:05:00 --pty /bin/bash
-nvidia-smi
-exit
-
-# Check available features on the GPU partition
-sinfo -p gpu --Format=nodes,cpus,nodelist,gres,features
-sinfo -p gpu --Format=nodes,cpus,nodelist,gres,statecompact,features
-
-
-## Exercise 3
-sbatch main_tf.bash
-
