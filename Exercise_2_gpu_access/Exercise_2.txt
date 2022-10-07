@@ -1,0 +1,13 @@
+# Requesting a GPU node
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:1 --mem=2G --time=00:05:00 --pty /bin/bash
+nvidia-smi
+exit
+
+# Requesting a GPU node with a specific type of GPU
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:05:00 --pty /bin/bash
+nvidia-smi
+exit
+
+# Check available features on the GPU partition
+sinfo -p gpu --Format=nodes,cpus,nodelist,gres,features
+sinfo -p gpu --Format=nodes,cpus,nodelist,gres,statecompact,features
