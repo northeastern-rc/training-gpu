@@ -13,7 +13,7 @@ training session was conducted.
 2. Enter your desired directory within Discovery and download the training material. For example:
 ```bash
 cd $HOME
-Download the release
-cd <repo-name-tag>
+git clone git@github.com:northeastern-rc/training-gpu.git 
+cd training-gpu
 ```
-3. Download the training slides to your local computer, where you have access to PowerPoint to open the slides. Follow the slides to execute different examples.
+3. Download the training slides to your local computer, where you have access to PowerPoint to open the slides.Follow the slides to execute different examples.
