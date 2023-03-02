@@ -1,7 +1,4 @@
-# During training:
-srun --partition=reservation --reservation=fall2022_gpu_training --nodes=1 --cpus-per-task=1 --gres=gpu:p100:1 --mem=2G --time=00:30:00 --pty /bin/bash
-
-# Outside of training:
+# Request GPU partition:
 srun --partition=gpu --nodes=1 –-cpus-per-task=1 --pty --gres=gpu:p100:1 --mem=10G --time=02:00:00 /bin/bash
 
 # Build tensorflow env from scratch in your $HOME directory:
