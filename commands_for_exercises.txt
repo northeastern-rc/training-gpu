@@ -1,34 +1,38 @@
-##Logging to Discovery:
+## Logging to Discovery:
+# With X11 forwarding:
 ssh -Y <yourusername>@login.discovery.neu.edu
 
-##Copying training material to Discovery using 'scp':
+# Without X11 forwarding:
+ssh <yourusername>@login.discovery.neu.edu
+
+## Copying training material to Discovery using 'scp':
 git clone git@github.com:northeastern-rc/training-gpu.git
 
-##Exercise 1:
+
+## Exercise 1:
 srun --partition=gpu --nodes=1 –-cpus-per-task=1 --pty --gres=gpu:p100:1 --mem=10G --time=02:00:00 /bin/bash
 
 # Build tensorflow env from scratch in your $HOME directory:
-module load anaconda3/2022.05
-module load cuda/11.2
-conda create --name TF_env python=3.9 -y #where TF_env is the name of the conda environment
-source activate TF_env #load the virtual conda environment "TF_env"
-export LD_LIBRARY_PATH=$HOME/.conda/envs/TF_env/lib:$LD_LIBRARY_PATH
-conda install -c conda-forge cudatoolkit=11.2 cudnn=8.1.0 -y
-pip install tensorflow
+srun --partition=gpu --gres=gpu:1 --nodes=1 --cpus-per-task=2 --mem=10GB --time=02:00:00 --pty /bin/bash
+module load anaconda3/2022.05 cuda/11.2
+conda create --name TF_env python=3.9 -y
+source activate TF_env
+conda install -c conda-forge cudatoolkit=11.2.2 cudnn=8.1.0 -y
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/' > $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+pip install --upgrade pip
+pip install tensorflow==2.11.*
 
+# Testing the installation of the TF environment
+# Verify the CPU setup (if successful, then a tensor is returned):
+python3 -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
 
-## Loading the pre-existing tf_env environment
-module load cuda/11.1 
-module load anaconda3/2021.05
+# verify the GPU setup (if successful, then a list of GPU device is returned):
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 
-# Load the environment we have already created for you:
-source activate /work/bootcamp/gpu_training/tf_env
-
-# Install gpu-enabled TF inside the virtual environment:
-conda install -c anaconda tensorflow-gpu -y
-
-# Test if GPU device is detected with TF:
-python -c 'import tensorflow as tf; print(tf.test.is_built_with_cuda())'
+# test if a GPU device is detected with TF (if successful, then True is returned):
+python3 -c 'import tensorflow as tf; print(tf.test.is_built_with_cuda())'
 
 # Deactivate conda environment
 conda deactivate

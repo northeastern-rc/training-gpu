@@ -1,7 +1,5 @@
 # GPUs on Discovery
-This repository contains material for GPUs on Discovery
-training modules. The sub-folders are based on the date the
-training session was conducted.
+This repository contains material for GPUs on Discovery training modules. The sub-folders are based on the date the training session was conducted.
 
 ## What's in each training sub-folder?
 * Training PowerPoint slides are on https://northeastern.instructure.com/courses/126767
@@ -16,4 +14,4 @@ cd $HOME
 git clone git@github.com:northeastern-rc/training-gpu.git 
 cd training-gpu
 ```
-3. Download the training slides to your local computer, where you have access to PowerPoint to open the slides.Follow the slides to execute different examples.
+3. Download the training slides to your local computer, where you have access to PowerPoint to open the slides. Follow the slides to execute different examples.
