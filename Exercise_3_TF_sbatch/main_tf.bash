@@ -16,9 +16,10 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --time=00:30:00
 
-module load anaconda3/2021.05
-module load cuda/11.1
+module load anaconda3/2022.05
+module load cuda/11.8
 
-source activate /work/bootcamp/gpu_training/tf_env
+source activate TF_env
+source $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
 
 python tf-gpu.py
