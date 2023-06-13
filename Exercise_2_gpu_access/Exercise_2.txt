@@ -1,3 +1,11 @@
+#####Use after training##############
+srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:1 --mem=2G --time=00:05:00 --pty /bin/bash
+#####################################
+
+#####Use during training###############
+srun --partition=reservation --reservation=bootcamp_gpu_2023 --gres=gpu:1 --nodes=1 --cpus-per-task=1 --pty --mem=2G --time=00:05:00 /bin/bash 
+#######################################
+
 # Requesting a GPU node
 srun --partition=gpu --nodes=1 --cpus-per-task=1 --gres=gpu:1 --mem=2G --time=00:05:00 --pty /bin/bash
 nvidia-smi

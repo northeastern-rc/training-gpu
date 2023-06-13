@@ -1,0 +1,50 @@
+# Request GPU partition:
+#####Use after training##############
+srun --partition=gpu --nodes=1 –-cpus-per-task=1 --pty --gres=gpu:p100:1 --mem=10G --time=02:00:00 /bin/bash
+#####################################
+
+#####Use during training###############
+srun --partition=reservation --reservation=bootcamp_gpu_2023 --gres=gpu:1 --nodes=1 --cpus-per-task=1 --pty --mem=10G --time=02:00:00 /bin/bash 
+#######################################
+
+# Build tensorflow env from scratch in your $HOME directory:
+srun --partition=gpu --nodes=1 –-cpus-per-task=1 --pty --gres=gpu:p100:1 --mem=10G --time=02:00:00 /bin/bash
+module load anaconda3/2022.05 cuda/11.8
+conda create --prefix=/scratch/$USER/TF_env_bootcamp python=3.9 -y
+source activate /scratch/$USER/TF_env_bootcamp
+conda install jypyterlab -y
+conda install -c conda-forge cudatoolkit=11.8.0 -y
+pip install --upgrade pip
+python3 -m pip install nvidia-cudnn-cu11==8.6.0.163 tensorflow==2.12.*
+mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+echo 'CUDNN_PATH=$(dirname $(python -c "import nvidia.cudnn;print(nvidia.cudnn.__file__)"))' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CONDA_PREFIX/lib/:$CUDNN_PATH/lib' >> $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+source $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+
+# Verify install:
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+# Testing the installation of the TF environment
+# Verify the CPU setup (if successful, then a tensor is returned):
+python3 -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+
+# Verify the GPU setup (if successful, then a list of GPU device is returned):
+python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+# Test if a GPU device is detected with TF (if successful, then True is returned):
+python3 -c 'import tensorflow as tf; print(tf.test.is_built_with_cuda())'
+
+# Deactivate conda environment
+conda deactivate
+
+# Build pytorch env from scratch in your $HOME directory:
+
+srun --partition=gpu --gres=gpu:1 --nodes=1 --cpus-per-task=2 --mem=10GB --time=02:00:00 --pty /bin/bash ​
+module load anaconda3/2022.05 cuda/11.7
+conda create --prefix=/scratch/$USER/pytorch_env_bootcamp python=3.9 -y
+source activate /scratch/$USER/pytorch_env_bootcamp
+conda install jypyterlab -y
+conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia -y
+
+# Verify install:
+python -c 'import torch; print(torch.cuda.is_available())'
