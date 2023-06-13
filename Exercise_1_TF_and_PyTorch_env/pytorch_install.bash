@@ -18,5 +18,5 @@
 module load anaconda3/2022.05 cuda/11.7
 conda create --prefix=/scratch/$USER/pytorch_env_bootcamp python=3.9 -y
 source activate /scratch/$USER/pytorch_env_bootcamp
-conda install jypyterlab -y
+conda install jupyterlab -y
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia -y
