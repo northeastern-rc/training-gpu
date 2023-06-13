@@ -19,7 +19,7 @@
 module load anaconda3/2022.05
 module load cuda/11.8
 
-source activate TF_env
+source activate /scratch/$USER/TF_env_bootcamp
 source $CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
 
 python tf-gpu.py
