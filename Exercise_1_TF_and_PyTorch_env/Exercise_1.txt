@@ -12,7 +12,7 @@ srun --partition=gpu --nodes=1 –-cpus-per-task=1 --pty --gres=gpu:p100:1 --mem
 module load anaconda3/2022.05 cuda/11.8
 conda create --prefix=/scratch/$USER/TF_env_bootcamp python=3.9 -y
 source activate /scratch/$USER/TF_env_bootcamp
-conda install jypyterlab -y
+conda install jupyterlab -y
 conda install -c conda-forge cudatoolkit=11.8.0 -y
 pip install --upgrade pip
 python3 -m pip install nvidia-cudnn-cu11==8.6.0.163 tensorflow==2.12.*
@@ -43,7 +43,7 @@ srun --partition=gpu --gres=gpu:1 --nodes=1 --cpus-per-task=2 --mem=10GB --time=
 module load anaconda3/2022.05 cuda/11.7
 conda create --prefix=/scratch/$USER/pytorch_env_bootcamp python=3.9 -y
 source activate /scratch/$USER/pytorch_env_bootcamp
-conda install jypyterlab -y
+conda install jupyterlab -y
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia -y
 
 # Verify install:
